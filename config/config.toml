@@ -1,0 +1,27 @@
+#MySQL配置
+[mysql]
+host = "127.0.0.1"
+port = 3306
+database = "tiktok"
+username = "root"
+password = "123456"
+charset = "utf8mb4"
+parse_time = true
+loc = "Local"
+
+#Redis配置
+#存储每个用户是否对某个视频点了赞和是否关注了某个人
+#用于反馈前端情况，比如点赞后会变成红心，关注了某人之后关注按钮会变成取消关注
+[redis]
+host = "127.0.0.1"
+port = 6379
+database = 0
+
+#服务器配置
+[server]
+ip = "127.0.0.1"
+port = 9090
+
+#路径配置
+[path]
+static_source_path = "./static"
