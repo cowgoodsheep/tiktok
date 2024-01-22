@@ -13,6 +13,7 @@ type Video struct {
 	Title         string    `json:"title"`
 	Description   string    `json:"description"`
 	Upload_time   time.Time `json:"upload_time"`
+	Views         int       `json:"views"`
 	Likes_count   int       `json:"likes_count"`
 	Comment_count int       `json:"comment_counts"`
 	Video_url     string    `json:"video_url"`
@@ -116,6 +117,19 @@ func SubVideoLikeByVideoID(videoID int) error {
 	}
 
 	if err := dao.DB.Model(&video).Update("likes_count", video.Likes_count-1).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+// 根据视频ID给播放量加一
+func AddVideoViewByVideoID(videoID int) error {
+	var video Video
+	if err := GetVideoByID(videoID, &video); err != nil {
+		return err
+	}
+
+	if err := dao.DB.Model(&video).Update("views", video.Views+1).Error; err != nil {
 		return err
 	}
 	return nil

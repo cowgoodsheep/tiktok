@@ -246,6 +246,12 @@ func VideoDetail(c *gin.Context) {
 		return
 	}
 
+	//增加视频播放量
+	if err := models.AddVideoViewByVideoID(int(videoID)); err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+
 	//获取token
 	token := c.Query("token")
 	//如果找不到，就去Form表单去找
