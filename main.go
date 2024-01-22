@@ -12,7 +12,7 @@ func main() {
 	//数据库初始化
 	dao.InitMySQL()
 	//数据库迁移
-	dao.DB.AutoMigrate(&models.User{}, &models.Video{}, &models.Favorite{}, &models.Comment{}, &models.Follow{}, &models.Reply{})
+	dao.DB.AutoMigrate(&models.User{}, &models.Video{}, &models.Favorite{}, &models.Comment{}, &models.Follow{}, &models.Reply{}, &models.History{})
 	//关闭数据库
 	defer dao.DB.Close()
 	//开启路由

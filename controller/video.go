@@ -293,6 +293,17 @@ func VideoDetail(c *gin.Context) {
 		video.Is_Like = cache.GetUserLike(userID, video.ID)
 		//检查该视频是否已被收藏
 		video.Is_Favorite = cache.GetUserFavorite(userID, video.ID)
+
+		//调用logic，添加历史浏览记录
+		err = logic.PostHistory(userID, int(videoID))
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "添加历史浏览记录成功",
+		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{

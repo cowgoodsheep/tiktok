@@ -59,11 +59,11 @@ func SetupRouter() *gin.Engine {
 		查看已关注用户√
 		查看粉丝√
 		删除已关注用户√
-		查看历史浏览记录×
-		删除历史浏览记录×
+		查看历史浏览记录√
+		删除历史浏览记录√
 
 		视频：
-		视频详情√
+		视频详情（若已登录则添加历史浏览记录）√
 		查看视频评论√
 		用户发表视频评论√
 		用户删除视频评论√
@@ -72,7 +72,6 @@ func SetupRouter() *gin.Engine {
 		用户删除回复视频评论√
 		用户点赞视频√
 		用户取消点赞视频√
-		添加用户历史浏览记录×
 		获取该视频的弹幕×
 		用户发送视频弹幕×
 		用户删除视频弹幕×
@@ -141,12 +140,17 @@ func SetupRouter() *gin.Engine {
 
 		//用户查看粉丝
 		userGroup.GET("/fans", middleware.JWTMiddleWare(), controller.GetUserFans)
+
+		//用户查看历史浏览记录
+		userGroup.GET("/history", middleware.JWTMiddleWare(), controller.GetUserHistory)
+		//用户删除历史浏览记录
+		userGroup.DELETE("/history", middleware.JWTMiddleWare(), controller.DeleteUserHistory)
 	}
 
 	//视频路由组
 	videoGroup := r.Group("/video")
 	{
-		//视频详情页
+		//视频详情页（若已登录则添加历史浏览记录）
 		videoGroup.GET("/detail", controller.VideoDetail)
 
 		//查看该视频的评论列表
